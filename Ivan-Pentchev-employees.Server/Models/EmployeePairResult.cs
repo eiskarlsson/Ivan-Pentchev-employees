@@ -4,6 +4,9 @@
     {
         public int Employee1 { get; set; }
         public int Employee2 { get; set; }
-        public int TotalDaysWorkedTogether { get; set; }
+
+        public int ProjectID { get; set; }
+        public Dictionary<int, int> ProjectOverlaps { get; set; } = new Dictionary<int, int>();
+        public int TotalDays { get; set; }
     }
 }

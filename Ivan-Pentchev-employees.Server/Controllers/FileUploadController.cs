@@ -76,16 +76,21 @@ namespace Ivan_Pentchev_employees.Server.Controllers
 
                 var algorithm = new EmployeeAlgorithm();
 
-                algorithm.ParseCsvFile();
+                var inputData = algorithm.ParseCsvFile();
 
-                return Ok(new FileUploadResult
-                {
-                    Success = true,
-                    Message = "File uploaded successfully",
-                    FileName = file.FileName,
-                    FileSize = file.Length,
-                    FilePath = fileName
-                });
+                var result = algorithm.FindLongestWorkingPair(inputData);
+
+                return Ok(
+                    result);
+
+                //return Ok(new FileUploadResult
+                //{
+                //    Success = true,
+                //    Message = "File uploaded successfully",
+                //    FileName = file.FileName,
+                //    FileSize = file.Length,
+                //    FilePath = fileName
+                //});
             }
             catch (Exception ex)
             {
