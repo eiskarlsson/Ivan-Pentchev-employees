@@ -1,4 +1,4 @@
-﻿<h1 id="tableLabel">Employees & Projects</h1>
+<h1 id="tableLabel">Employees & Projects</h1>
 
 <p>Please select a csv file:</p>
 
@@ -28,7 +28,7 @@
             </tbody>
         </table>
 
-        <div *ngIf="gridResult">No ovelapping projects</div>
+        <div *ngIf="!gridResult || gridResult.length === 0">No ovelapping projects</div>
 
         <div *ngIf="parentErrorMessage" class="error-container">
             <h3>Error:</h3>
