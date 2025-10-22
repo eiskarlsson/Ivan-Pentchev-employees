@@ -2,31 +2,36 @@
 
 <p>Please select a csv file:</p>
 
-<app-file-upload 
-  (uploadComplete)="handleUploadComplete($event)"
-  (uploadError)="handleUploadError($event)">
+<app-file-upload (uploadComplete)="handleUploadComplete($event)" (uploadError)="handleUploadError($event)">
 </app-file-upload>
 
-<table *ngIf="parentUploadResult" class="modern-gradient-table">
-    <thead>
-        <tr>
-            <th>Employee1</th>
-            <th>Employee2</th>
-            <th>ProjectId</th>
-            <th>TotalDays</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr *ngFor="let result of gridResult">
-            <td>{{ result.employee1 }}</td>
-            <td>{{ result.employee2 }}</td>
-            <td>{{ result.projectId }}</td>
-            <td>{{ result.totalDays }}</td>
-        </tr>
-    </tbody>
-</table>
+<div class="row">
+    <div class="col-3"></div>
+    <div class="col-6">
 
-<div *ngIf="parentErrorMessage" class="error-container">
-  <h3>Error:</h3>
-  <p>{{ parentErrorMessage }}</p>
+        <table *ngIf="parentUploadResult" class="modern-gradient-table">
+            <thead>
+                <tr>
+                    <th>Employee1</th>
+                    <th>Employee2</th>
+                    <th>ProjectId</th>
+                    <th>TotalDays</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let result of gridResult">
+                    <td>{{ result.employee1 }}</td>
+                    <td>{{ result.employee2 }}</td>
+                    <td>{{ result.projectId }}</td>
+                    <td>{{ result.totalDays }}</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div *ngIf="parentErrorMessage" class="error-container">
+            <h3>Error:</h3>
+            <p>{{ parentErrorMessage }}</p>
+        </div>
+    </div>
+    <div class="col-4"></div>
 </div>
