@@ -72,7 +72,7 @@ namespace Ivan_Pentchev_employees.Server
                 .ToDictionary(group => group.Key, group => group.ToList());
         }
 
-        public static List<EmployeePairResult> CalculateProjectOverlaps(Dictionary<int, List<EmployeeProjectsInput>> projects)
+        private static List<EmployeePairResult> CalculateProjectOverlaps(Dictionary<int, List<EmployeeProjectsInput>> projects)
         {
             var pairOverlaps = new Dictionary<(int, int), EmployeePairResult>();
 

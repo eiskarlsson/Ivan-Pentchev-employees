@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.StaticFiles;
 using System.Text;
+using System.Text.Json;
 
 namespace Ivan_Pentchev_employees.Server.Controllers
 {
@@ -19,7 +20,7 @@ namespace Ivan_Pentchev_employees.Server.Controllers
         }
 
         [HttpPost("upload")]
-        public async Task<IActionResult> UploadSingle(IFormFile file)
+        public async Task<ActionResult<string>> UploadSingle(IFormFile file)
         {
             try
             {
@@ -62,8 +63,8 @@ namespace Ivan_Pentchev_employees.Server.Controllers
                     Directory.CreateDirectory(uploadsPath);
                 }
 
-                //Generate a name for the file
-                var fileName = $"{file.FileName}";
+                //Generate the same name for the file
+                var fileName = "employees.csv";
                 var filePath = Path.Combine(uploadsPath, fileName);
 
                 // Save file
@@ -80,7 +81,7 @@ namespace Ivan_Pentchev_employees.Server.Controllers
 
                 var result = algorithm.FindLongestWorkingPair(inputData);
 
-                return Ok(
+                return ToJson(
                     result);
 
                 //return Ok(new FileUploadResult
@@ -140,5 +141,22 @@ namespace Ivan_Pentchev_employees.Server.Controllers
             }
         }
 
+
+
+        /// <summary>
+        /// Helper method to json
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <returns></returns>
+        private string ToJson(object obj)
+        {
+            var options = new JsonSerializerOptions
+            {
+                WriteIndented = true,
+                PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+            };
+
+            return JsonSerializer.Serialize(obj, options);
+        }
     }
 }

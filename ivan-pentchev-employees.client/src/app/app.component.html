@@ -1,26 +1,32 @@
 ﻿<h1 id="tableLabel">Employees & Projects</h1>
 
-<p>This component demonstrates fetching data from the server.</p>
+<p>Please select a csv file:</p>
 
-<p *ngIf="!forecasts"><em>Loading... Please refresh once the ASP.NET backend has started. See <a href="https://aka.ms/jspsintegrationangular">https://aka.ms/jspsintegrationangular</a> for more details.</em></p>
+<app-file-upload 
+  (uploadComplete)="handleUploadComplete($event)"
+  (uploadError)="handleUploadError($event)">
+</app-file-upload>
 
-<app-file-upload></app-file-upload>
-
-<table *ngIf="forecasts">
+<table *ngIf="parentUploadResult" class="result-container">
     <thead>
         <tr>
-            <th>Date</th>
-            <th>Temp. (C)</th>
-            <th>Temp. (F)</th>
-            <th>Summary</th>
+            <th>Employee1</th>
+            <th>Employee2</th>
+            <th>ProjectId</th>
+            <th>TotalDays</th>
         </tr>
     </thead>
     <tbody>
-        <tr *ngFor="let forecast of forecasts">
-            <td>{{ forecast.date }}</td>
-            <td>{{ forecast.temperatureC }}</td>
-            <td>{{ forecast.temperatureF }}</td>
-            <td>{{ forecast.summary }}</td>
+        <tr *ngFor="let result of gridResult">
+            <td>{{ result.employee1 }}</td>
+            <td>{{ result.employee2 }}</td>
+            <td>{{ result.projectId }}</td>
+            <td>{{ result.totalDays }}</td>
         </tr>
     </tbody>
 </table>
+
+<div *ngIf="parentErrorMessage" class="error-container">
+  <h3>Error:</h3>
+  <p>{{ parentErrorMessage }}</p>
+</div>

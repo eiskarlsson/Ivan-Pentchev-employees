@@ -1,5 +1,4 @@
-// file-upload.component.ts
-import { Component } from '@angular/core';
+import { Component, Output, EventEmitter } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 @Component({
@@ -8,12 +7,17 @@ import { HttpClient } from '@angular/common/http';
   standalone: false,
   styleUrl: './file-upload.component.css'
 })
-export class FileUploadComponent {
-  selectedFile: File | null = null;
-  uploadProgress = 0;
-  uploadMessage = '';
 
-  constructor(private http: HttpClient) {}
+export class FileUploadComponent {
+  @Output() uploadComplete = new EventEmitter<any>();
+  @Output() uploadError = new EventEmitter<string>();
+  uploadMessage: string = '';
+  uploadProgress: number = 0;
+  selectedFile: File | null = null;
+
+  constructor(private http: HttpClient) {
+
+  }
 
   onFileSelected(event: any): void {
     this.selectedFile = event.target.files[0];
@@ -34,20 +38,29 @@ export class FileUploadComponent {
       observe: 'events'
     }).subscribe({
       next: (event: any) => {
-        if (event.type === 1) { // UploadProgress event
+        if (event.type === 1) {
           if (event.total) {
             this.uploadProgress = Math.round(100 * event.loaded / event.total);
           }
-        } else if (event.type === 4) { // Response event
+        } else if (event.type === 4) {
+          const result = event.body;
           this.uploadMessage = 'File uploaded successfully!';
           this.uploadProgress = 0;
           this.selectedFile = null;
+
+          // Emit the result to parent component
+          this.uploadComplete.emit(result);
         }
       },
       error: (error) => {
         this.uploadMessage = 'Upload failed: ' + error.message;
         this.uploadProgress = 0;
+
+        // Convert error to string before emitting
+        const errorMessage = error.message || 'Unknown upload error';
+        this.uploadError.emit(errorMessage);
       }
     });
   }
 }
+
