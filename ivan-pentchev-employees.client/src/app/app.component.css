@@ -12,3 +12,52 @@ th, td {
 table {
     margin: 0 auto;
 }
+
+.modern-gradient-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 25px 0;
+  font-size: 0.9em;
+  font-family: 'Segoe UI', sans-serif;
+  min-width: 600px;
+  border-radius: 12px 12px 0 0;
+  overflow: hidden;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+}
+
+.modern-gradient-table thead tr {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: #ffffff;
+  text-align: left;
+  font-weight: bold;
+}
+
+.modern-gradient-table th,
+.modern-gradient-table td {
+  padding: 16px 20px;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.modern-gradient-table tbody tr {
+  border-bottom: 1px solid #f0f0f0;
+  transition: all 0.3s ease;
+}
+
+.modern-gradient-table tbody tr:nth-of-type(even) {
+  background-color: #f8f9ff;
+}
+
+.modern-gradient-table tbody tr:nth-of-type(odd) {
+  background-color: #ffffff;
+}
+
+.modern-gradient-table tbody tr:hover {
+  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+  color: white;
+  transform: translateX(5px);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.modern-gradient-table tbody tr:last-of-type {
+  border-bottom: 2px solid #667eea;
+}
