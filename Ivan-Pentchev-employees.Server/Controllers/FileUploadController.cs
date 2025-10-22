@@ -1,6 +1,7 @@
 ﻿using Ivan_Pentchev_employees.Server.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.StaticFiles;
+using System.Text;
 
 namespace Ivan_Pentchev_employees.Server.Controllers
 {
@@ -61,8 +62,8 @@ namespace Ivan_Pentchev_employees.Server.Controllers
                     Directory.CreateDirectory(uploadsPath);
                 }
 
-                // Generate unique file name
-                var fileName = $"{Guid.NewGuid()}{fileExtension}";
+                //Generate a name for the file
+                var fileName = $"{file.FileName}";
                 var filePath = Path.Combine(uploadsPath, fileName);
 
                 // Save file
@@ -72,6 +73,10 @@ namespace Ivan_Pentchev_employees.Server.Controllers
                 }
 
                 _logger.LogInformation($"File uploaded successfully: {fileName}");
+
+                var algorithm = new EmployeeAlgorithm();
+
+                algorithm.ParseCsvFile();
 
                 return Ok(new FileUploadResult
                 {
@@ -129,5 +134,6 @@ namespace Ivan_Pentchev_employees.Server.Controllers
                 return StatusCode(500, new { Message = "Internal server error" });
             }
         }
+
     }
 }
