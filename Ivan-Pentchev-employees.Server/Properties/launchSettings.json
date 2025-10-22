@@ -19,8 +19,16 @@
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development",
         "ASPNETCORE_HOSTINGSTARTUPASSEMBLIES": "Microsoft.AspNetCore.SpaProxy"
+      },
+      "Production": {
+        "commandName": "Project",
+        "dotnetRunMessages": true,
+        "launchBrowser": false,
+        "applicationUrl": "https://ivan-pentchev-employeesserver-ap.blackfield-302f15cf.germanywestcentral.azurecontainerapps.io",
+        "environmentVariables": {
+          "ASPNETCORE_ENVIRONMENT": "Production"
+        }
       }
     }
-  }
 }
 

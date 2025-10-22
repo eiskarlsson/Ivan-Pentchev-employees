@@ -15,14 +15,17 @@ namespace Ivan_Pentchev_employees.Server
 
         public string ReadFirstFile()
         {
-            var uploadsPath = Path.Combine(Directory.GetCurrentDirectory(), "Uploads");
+            //var uploadsPath = Path.Combine(Directory.GetCurrentDirectory(), "Uploads");
 
-            if (!Directory.Exists(uploadsPath))
-            {
-                return "Uploads directory does not exist";
-            }
+            //if (!Directory.Exists(uploadsPath))
+            //{
+            //    return "Uploads directory does not exist";
+            //}
 
-            var files = Directory.GetFiles(uploadsPath);
+            var tempPath = Path.GetTempPath();
+            var filePath = Path.Combine(tempPath, "employees.csv");
+
+            var files = Directory.GetFiles(tempPath);
             if (files.Length == 0)
             {
                 return "No files found in Uploads directory";

@@ -57,15 +57,19 @@ namespace Ivan_Pentchev_employees.Server.Controllers
                 }
 
                 // Create uploads directory if it doesn't exist
-                var uploadsPath = Path.Combine(_environment.ContentRootPath, "Uploads");
-                if (!Directory.Exists(uploadsPath))
-                {
-                    Directory.CreateDirectory(uploadsPath);
-                }
+                //var uploadsPath = Path.Combine(_environment.ContentRootPath, "Uploads");
+                //if (!Directory.Exists(uploadsPath))
+                //{
+                //    Directory.CreateDirectory(uploadsPath);
+                //}
 
                 //Generate the same name for the file
                 var fileName = "employees.csv";
-                var filePath = Path.Combine(uploadsPath, fileName);
+                //var filePath = Path.Combine(uploadsPath, fileName);
+
+                //To work in Azure
+                var tempPath = Path.GetTempPath();
+                var filePath = Path.Combine(tempPath, fileName);
 
                 // Save file
                 using (var stream = new FileStream(filePath, FileMode.Create))
