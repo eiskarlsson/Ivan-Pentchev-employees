@@ -102,7 +102,8 @@ namespace Ivan_Pentchev_employees.Server
                                 pairOverlaps[pairKey] = new EmployeePairResult
                                 {
                                     Employee1 = pairKey.Item1,
-                                    Employee2 = pairKey.Item2
+                                    Employee2 = pairKey.Item2,
+                                    ProjectID = projectId
                                 };
                             }
 
