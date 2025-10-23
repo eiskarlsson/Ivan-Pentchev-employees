@@ -50,7 +50,8 @@ export class FileUploadComponent {
           this.selectedFile = null;
 
           // Emit the result to parent component
-          this.uploadComplete.emit(result);
+          if(result)
+              this.uploadComplete.emit(result);
         }
       },
       error: (error) => {
