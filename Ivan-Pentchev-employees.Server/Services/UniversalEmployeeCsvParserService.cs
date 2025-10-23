@@ -1,20 +1,25 @@
 ﻿using Ivan_Pentchev_employees.Server.Models;
+using Ivan_Pentchev_employees.Server.Services;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Text.RegularExpressions; // For ExtractDateFromString method
-using Ivan_Pentchev_employees.Server.Services;
+using static Ivan_Pentchev_employees.Server.Services.UniversalEmployeeCsvParserService;
 
 namespace Ivan_Pentchev_employees.Server.Services
 {
-    public class UniversalEmployeeCsvParserService
+    public interface IUniversalEmployeeCsvParserService
     {
-        private readonly UniversalDateParserService _dateParser;
+        public ParseResult ParseCsvContent(string csvContent);
+    }
+    public class UniversalEmployeeCsvParserService : IUniversalEmployeeCsvParserService
+    {
+        private readonly IUniversalDateParserService _dateParser;
 
-        public UniversalEmployeeCsvParserService()
+        public UniversalEmployeeCsvParserService(IUniversalDateParserService _dateParser)
         {
-            _dateParser = new UniversalDateParserService();
+            this._dateParser = _dateParser;
         }
 
         public class ParseResult

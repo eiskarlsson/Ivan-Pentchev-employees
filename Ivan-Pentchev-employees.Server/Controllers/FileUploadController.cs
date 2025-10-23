@@ -12,11 +12,13 @@ namespace Ivan_Pentchev_employees.Server.Controllers
     {
         private readonly IWebHostEnvironment _environment;
         private readonly ILogger<FileUploadController> _logger;
+        private readonly IEmployeeAlgorithm _algorithm;
 
-        public FileUploadController(IWebHostEnvironment environment, ILogger<FileUploadController> logger)
+        public FileUploadController(IWebHostEnvironment environment, ILogger<FileUploadController> logger, IEmployeeAlgorithm algorithm)
         {
             _environment = environment;
             _logger = logger;
+            _algorithm = algorithm;
         }
 
         [HttpPost("upload")]
@@ -79,11 +81,9 @@ namespace Ivan_Pentchev_employees.Server.Controllers
 
                 _logger.LogInformation($"File uploaded successfully: {fileName}");
 
-                var algorithm = new EmployeeAlgorithm();
+                var inputData = _algorithm.ParseCsvFile();
 
-                var inputData = algorithm.ParseCsvFile();
-
-                var result = algorithm.FindLongestWorkingPair(inputData);
+                var result = _algorithm.FindLongestWorkingPair(inputData);
 
                 return ToJson(
                     result);

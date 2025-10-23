@@ -33,8 +33,8 @@ export class FileUploadComponent {
     const formData = new FormData();
     formData.append('file', this.selectedFile, this.selectedFile.name);
 
-    //this.http.post('https://localhost:7048/api/fileupload/upload', formData, {
-    this.http.post('https://ivan-pentchev-employeesserver-ap.blackfield-302f15cf.germanywestcentral.azurecontainerapps.io/api/fileupload/upload', formData, {
+    this.http.post('https://localhost:7048/api/fileupload/upload', formData, {
+    //this.http.post('https://ivan-pentchev-employeesserver-ap.blackfield-302f15cf.germanywestcentral.azurecontainerapps.io/api/fileupload/upload', formData, {
       reportProgress: true,
       observe: 'events'
     }).subscribe({

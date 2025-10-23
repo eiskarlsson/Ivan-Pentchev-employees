@@ -6,7 +6,12 @@ using System.Text.RegularExpressions;
 
 namespace Ivan_Pentchev_employees.Server.Services
 {
-    public class UniversalDateParserService
+    public interface IUniversalDateParserService
+    {
+        public DateTime ParseAnyDate(string dateString);
+    }
+
+    public class UniversalDateParserService : IUniversalDateParserService
     {
         private readonly List<CultureInfo> _cultures;
         private readonly DateTimeStyles _dateTimeStyles;

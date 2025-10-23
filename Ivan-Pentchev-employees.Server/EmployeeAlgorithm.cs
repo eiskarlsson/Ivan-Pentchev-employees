@@ -3,13 +3,22 @@ using Ivan_Pentchev_employees.Server.Services;
 
 namespace Ivan_Pentchev_employees.Server
 {
-    public class EmployeeAlgorithm
+    public interface IEmployeeAlgorithm
     {
-        private readonly UniversalEmployeeCsvParserService _csvParser;
+        public string ReadFirstFile();
 
-        public EmployeeAlgorithm()
+        public List<EmployeeProjectsInput> ParseCsvFile();
+
+        public LongestPairResult FindLongestWorkingPair(List<EmployeeProjectsInput> inputData);
+    }
+
+    public class EmployeeAlgorithm : IEmployeeAlgorithm
+    {
+        private readonly IUniversalEmployeeCsvParserService _csvParser;
+
+        public EmployeeAlgorithm(IUniversalEmployeeCsvParserService _parser)
         {
-            _csvParser = new UniversalEmployeeCsvParserService();
+            _csvParser = _parser;
         }
 
 
@@ -31,7 +40,7 @@ namespace Ivan_Pentchev_employees.Server
                 return "No files found in Uploads directory";
             }
 
-            var firstFile = files[0]; // Get first file
+            var firstFile = files.FirstOrDefault(u=>u.Contains("employees.csv")); // Get first file
             return File.ReadAllText(firstFile);
         }
 
