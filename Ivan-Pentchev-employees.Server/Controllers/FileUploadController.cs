@@ -108,51 +108,13 @@ namespace Ivan_Pentchev_employees.Server.Controllers
             }
         }
 
-        [HttpGet("download/{fileName}")]
-        public async Task<IActionResult> Download(string fileName)
-        {
-            try
-            {
-                var uploadsPath = Path.Combine(_environment.ContentRootPath, "Uploads");
-                var filePath = Path.Combine(uploadsPath, fileName);
-
-                if (!System.IO.File.Exists(filePath))
-                {
-                    return NotFound();
-                }
-
-                var memory = new MemoryStream();
-                using (var stream = new FileStream(filePath, FileMode.Open))
-                {
-                    await stream.CopyToAsync(memory);
-                }
-
-                memory.Position = 0;
-
-                // Get content type
-                var provider = new FileExtensionContentTypeProvider();
-                if (!provider.TryGetContentType(filePath, out string contentType))
-                {
-                    contentType = "application/octet-stream";
-                }
-
-                return File(memory, contentType, Path.GetFileName(filePath));
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "Error downloading file");
-                return StatusCode(500, new { Message = "Internal server error" });
-            }
-        }
-
-
-
+       
         /// <summary>
         /// Helper method to json
         /// </summary>
         /// <param name="obj"></param>
         /// <returns></returns>
-        private string ToJson(object obj)
+        public string ToJson(object obj)
         {
             var options = new JsonSerializerOptions
             {
