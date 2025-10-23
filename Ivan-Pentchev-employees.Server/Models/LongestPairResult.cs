@@ -8,11 +8,9 @@
         public List<EmployeePairResult> ProjectDetails { get; set; } = new List<EmployeePairResult>();
 
         // Helper property to get all project IDs
-        public List<int> ProjectIds => ProjectDetails.Select(p => p.ProjectID).Distinct().ToList();
+        public List<int> ProjectIds { get; set; }
 
         // Helper property to get overlap days by project
-        public Dictionary<int, int> ProjectOverlapDays =>
-            ProjectDetails.GroupBy(p => p.ProjectID)
-                .ToDictionary(g => g.Key, g => g.Sum(p => p.TotalDays));
+        public Dictionary<int, int> ProjectOverlapDays { get; set; }
     }
 }

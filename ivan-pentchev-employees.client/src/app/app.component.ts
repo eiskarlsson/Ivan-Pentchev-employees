@@ -54,13 +54,15 @@ export class AppComponent implements OnInit {
   }
 
   getGridData() {
-    return this.parentUploadResult.projectIds.map((projectId: string | number, index: any) => ({
+  return this.parentUploadResult.projectIds.map((projectId: string | number) => {
+    return {
       employee1: this.parentUploadResult.employee1,
       employee2: this.parentUploadResult.employee2,
       projectId: projectId,
       totalDays: this.parentUploadResult.projectOverlapDays[projectId] || 0
-    }));
-  }
+    };
+  });
+}
 
 
   title = 'ivan-pentchev-employees.client';

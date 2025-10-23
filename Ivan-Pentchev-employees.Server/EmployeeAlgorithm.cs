@@ -40,7 +40,7 @@ namespace Ivan_Pentchev_employees.Server
                 return "No files found in Uploads directory";
             }
 
-            var firstFile = files.FirstOrDefault(u=>u.Contains("employees.csv")); // Get first file
+            var firstFile = files.FirstOrDefault(u => u.Contains("employees.csv")); // Get first file
             return File.ReadAllText(firstFile);
         }
 
@@ -76,7 +76,7 @@ namespace Ivan_Pentchev_employees.Server
             return FindLongestPair(pairOverlaps);
         }
 
-       
+
         private static Dictionary<int, List<EmployeeProjectsInput>> OrganizeByProjectLinq(List<EmployeeProjectsInput> inputData)
         {
             return inputData
@@ -115,10 +115,17 @@ namespace Ivan_Pentchev_employees.Server
                                 {
                                     Employee1 = pairKey.Item1,
                                     Employee2 = pairKey.Item2,
-                                    ProjectID = projectId
+                                    ProjectIDs = new List<int>(), 
+                                    ProjectOverlaps = new Dictionary<int, int>()
                                 };
                             }
 
+                            if (!pairOverlaps[pairKey].ProjectIDs.Contains(projectId))
+                            {
+                                pairOverlaps[pairKey].ProjectIDs.Add(projectId);
+                            }
+
+                            // Add/update the overlap for this specific project
                             pairOverlaps[pairKey].ProjectOverlaps[projectId] = overlapDays;
                             pairOverlaps[pairKey].TotalDays += overlapDays;
                         }
@@ -147,7 +154,7 @@ namespace Ivan_Pentchev_employees.Server
             return EmpId1 < EmpId2 ? (EmpId1, EmpId2) : (EmpId2, EmpId1);
         }
 
-        
+
         private static LongestPairResult FindLongestPair(List<EmployeePairResult> overlapResults)
         {
             if (overlapResults == null || overlapResults.Count == 0)
@@ -161,7 +168,11 @@ namespace Ivan_Pentchev_employees.Server
                     Employee1 = g.Key.Employee1,
                     Employee2 = g.Key.Employee2,
                     TotalDays = g.Sum(x => x.TotalDays),
-                    ProjectDetails = g.ToList()
+                    ProjectDetails = g.ToList(),
+                    ProjectIds = g.SelectMany(x => x.ProjectOverlaps.Keys).Distinct().ToList(),
+                    ProjectOverlapDays = g.SelectMany(x => x.ProjectOverlaps)
+                        .GroupBy(kvp => kvp.Key, kvp => kvp.Value)
+                        .ToDictionary(grp => grp.Key, grp => grp.Sum())
                 })
                 .OrderByDescending(x => x.TotalDays)
                 .First();
